@@ -3,8 +3,6 @@ const bcrypt = require('bcrypt')
 const People = require('./models/People')
 require('dotenv').config()
 
-
-
 const login = async(req,res)=>{
     const {email, password} = req.body
     let user = await People.findOne({Email: email})
@@ -19,12 +17,11 @@ const login = async(req,res)=>{
     const refreshToken = jwt.sign({userId: user._id}, process.env.refreshTokenSecret)
     const accessToken = jwt.sign({userId: user._id}, process.env.accessTokenSecret)
     console.log(`accessToken : ${accessToken}`)
-   // const maxAge = (15 * 60 * 1000) //15 minutes
-
+  
     res.cookie("accessToken",accessToken,{
         httpOnly: true,
         secure: true,
-        maxAge: 15 * 60 * 1000,
+        maxAge: 15 * 60 * 1000,  //15 minutes
         sameSite: 'Strict'
     })
 
