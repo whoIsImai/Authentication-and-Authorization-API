@@ -1,0 +1,16 @@
+const express = require('express')
+const app = express()
+const cors = require('cors')
+const router = require('./routes/router')
+const mongoose = require('mongoose')
+const cookieParser = require('cookie-parser')
+
+mongoose.connect('mongodb://localhost/database')
+const conn = mongoose.connection
+conn.on("error", (error)=> console.log(error))
+conn.once("open", ()=> console.log("Connected to database"))
+app.use(express.json())
+app.use(cors())
+app.use(cookieParser())
+app.use('/api',router)
+app.listen(1000, ()=> console.log(`server started on port http://localhost:${1000}`))
