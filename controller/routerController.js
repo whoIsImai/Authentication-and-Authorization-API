@@ -1,9 +1,7 @@
 const jwt = require('jsonwebtoken')
 const People = require('../models/People')
 const bcrypt = require('bcrypt')
-
-const accessTokenSecret = 'myaccesstoken'
-const refreshTokenSecret = 'myrefreshtoken'
+require('dotenv').config()
 
 const getUsers = async(req,res)=>{
     const Users = await People.find()
@@ -18,7 +16,7 @@ const authenticateToken = (req,res,next)=>{
     const cookies = req.cookies
     if (cookies && cookies.accessToken){
         try {
-            const userAcessToken = jwt.verify(cookies.accessToken, accessTokenSecret)
+            const userAcessToken = jwt.verify(cookies.accessToken, process.env.accessTokenSecret)
             req.user = userAcessToken
         } catch (error) {
             res.clearCookie('accessToken')
@@ -31,8 +29,8 @@ const authenticateToken = (req,res,next)=>{
     const refreshToken = authHeader.split(' ')[1]
 
     try {
-        const userRefreshToken = jwt.verify(refreshToken, refreshTokenSecret)
-        const newAccessToken = jwt.sign({userId: userRefreshToken.userId}, accessTokenSecret)
+        const userRefreshToken = jwt.verify(refreshToken, process.env.refreshTokenSecret)
+        const newAccessToken = jwt.sign({userId: userRefreshToken.userId}, process.env.accessTokenSecret)
 
         res.cookie("accessToken",newAccessToken,{
         httpOnly: true,
