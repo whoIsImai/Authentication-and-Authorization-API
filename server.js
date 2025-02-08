@@ -4,8 +4,9 @@ const cors = require('cors')
 const router = require('./routes/router')
 const mongoose = require('mongoose')
 const cookieParser = require('cookie-parser')
+require('dotenv').config()
 
-mongoose.connect('mongodb://localhost/database')
+mongoose.connect(process.env.Database_URL)
 const conn = mongoose.connection
 conn.on("error", (error)=> console.log(error))
 conn.once("open", ()=> console.log("Connected to database"))
