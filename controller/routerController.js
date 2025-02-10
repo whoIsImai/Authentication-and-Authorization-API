@@ -14,38 +14,45 @@ async function getSingleUser(req,res){
 
 const authenticateToken = (req,res,next)=>{
     const cookies = req.cookies
-    if (cookies && cookies.accessToken){
+    if (cookies && cookies.accessToken)
+    {
         try {
             const userAcessToken = jwt.verify(cookies.accessToken, process.env.accessTokenSecret)
             req.user = userAcessToken
-        } catch (error) {
+        } catch (error) 
+        {
             res.clearCookie('accessToken')
              
-        const authHeader = req.header('Authorization')
+             const authHeader = req.header.authorization
 
-    if(!authHeader){
-        return res.json({message: "no refresh tokens found"})
-    }
-    const refreshToken = authHeader.split(' ')[1]
-
-    try {
-        const userRefreshToken = jwt.verify(refreshToken, process.env.refreshTokenSecret)
-        const newAccessToken = jwt.sign({userId: userRefreshToken.userId}, process.env.accessTokenSecret)
-
-        res.cookie("accessToken",newAccessToken,{
-        httpOnly: true,
-        secure: true,
-        maxAge: maxAge,
-        sameSite: 'Strict'
-        })
-
-        req.user = {userId: userRefreshToken.userId}
-        next()
-    } catch (error) {
-        res.clearCookie('accessToken')
-        res.json({error: error.message})
-        res.redirect("/login")
-     }
+            const refreshToken = authHeader.split(' ')[1]
+                    if(refreshToken)
+                    {
+                        try {
+                            const userRefreshToken = jwt.verify(refreshToken, process.env.refreshTokenSecret)
+                            const newAccessToken = jwt.sign({userId: userRefreshToken.userId}, process.env.accessTokenSecret)
+                    
+                            res.cookie("accessToken",newAccessToken,{
+                            httpOnly: true,
+                            secure: true,
+                            maxAge: maxAge,
+                            sameSite: 'Strict'
+                            })
+                    
+                            req.user = {userId: userRefreshToken.userId}
+                            next()
+                        } catch (error) {
+                            res.clearCookie('accessToken')
+                            res.json({error: error.message})
+                            res.redirect("/login")
+                        }
+                    } else
+                        {
+                              //if no refresh tokens found
+                              res.clearCookie('accessToken')
+                              res.redirect('/login')  
+                         }
+  
         }
     }
     else{
