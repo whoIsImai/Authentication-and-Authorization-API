@@ -1,11 +1,13 @@
 import {describe, it, expect} from 'vitest'
 import supertest from 'supertest'
-import {server} from '../index.js'
-import {connectDB} from '../config/db.js'
+import {server} from '../server.js'
+import People from '../models/People.js'
 import 'dotenv/config'
+const mongoose = require('mongoose')
+mongoose.connect(process.env.Database_URL)
 
 connectDB(process.env.TEST_DB_URI)
-server.listen(process.env.TEST_PORT)
+
 
 describe('all the activities the user can perform on different routes', () => {
     it('should register a user', async () => {
