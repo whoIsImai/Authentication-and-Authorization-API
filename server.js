@@ -1,10 +1,10 @@
-const express = require('express')
-const app = express()
-const cors = require('cors')
-const router = require('./routes/router')
-const mongoose = require('mongoose')
-const cookieParser = require('cookie-parser')
-require('dotenv').config()
+import express from 'express'
+export const app = express()
+import cors from 'cors'
+import router from './routes/router.js'
+import mongoose from 'mongoose'
+import cookieParser from 'cookie-parser'
+import 'dotenv/config'
 
 mongoose.connect(process.env.Database_URL)
 const conn = mongoose.connection
@@ -14,4 +14,3 @@ app.use(express.json())
 app.use(cors())
 app.use(cookieParser())
 app.use('/api',router)
-app.listen(1000, ()=> console.log(`server started on port http://localhost:${1000}`))

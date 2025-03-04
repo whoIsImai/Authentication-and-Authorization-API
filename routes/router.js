@@ -1,11 +1,12 @@
-const express = require('express')
+import express from 'express'
 const router = express.Router()
-const { getUsers,getSingleUser, authenticateToken, register} = require('../controller/routerController')
-const {login} = require('../authServer')
+import { getUsers,getSingleUser, authenticateToken, register} from '../controller/routerController.js'
+import {login} from '../controller/authController.js'
 
 
 router.get('/users', getUsers)
 router.post('/register', register)
 router.get('/login', login)
 router.get('/protected-route', authenticateToken, getSingleUser)
-module.exports = router
+
+export default router

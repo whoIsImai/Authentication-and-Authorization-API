@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken')
-const bcrypt = require('bcrypt')
-const People = require('./models/People')
-require('dotenv').config()
+import jwt from 'jsonwebtoken'
+import bcrypt from 'bcrypt'
+import People from '../models/People.js'
+import 'dotenv/config'
 
-const login = async(req,res)=>{
+export const login = async(req,res)=>{
     const {email, password} = req.body
     let user = await People.findOne({Email: email})
     if(!user){
@@ -33,5 +33,3 @@ const login = async(req,res)=>{
 
     return res.json({accessToken: accessToken ,refreshToken: refreshToken})
 }
-
-module.exports = {login}
