@@ -5,6 +5,8 @@ import 'dotenv/config'
 import mongoose from 'mongoose'
 mongoose.connect(process.env.Database_URL)
 
+server.listen(3000, ()=> console.log("Server is running on port 3000"))
+
 const conn = mongoose.connection
 conn.on("error", (error)=> console.log(error))
 conn.once("open", ()=> console.log("Connected to database"))
