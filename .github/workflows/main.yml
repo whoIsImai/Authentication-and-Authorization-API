@@ -16,4 +16,6 @@ jobs:
               with:
                   node-version: 22
             - run: npm ci
+            - name: Set environment variables
+              run: echo "DB_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
             - run: npm test
