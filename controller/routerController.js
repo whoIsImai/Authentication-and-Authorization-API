@@ -1,10 +1,10 @@
 import jwt from 'jsonwebtoken'
 import People from '../models/People.js'
-import { hash } from 'bcrypt'
+import bcrypt from 'bcrypt'
 import 'dotenv/config'
 
 const getUsers = async(req,res)=>{
-    const Users = await find()
+    const Users = await People.find()
     res.status(206).send(Users)
 }
 async function getSingleUser(req,res){
@@ -65,11 +65,11 @@ const register = async(req,res)=> {
     const {fname,lname,email,password} = req.body
 
     let newUser = new People({
-        Firstname: fname, Lastname: lname, Email: email, Password: await hash(password, 10)})
+        Firstname: fname, Lastname: lname, Email: email, Password: await bcrypt.hash(password, 10)})
     try {
         
         await newUser.save()
-        res.status(201).json({message: "Account created successfully"})
+        res.status(200).json({message: "Account created successfully"})
         
     } catch (error) {
         res.json({error: error.message})

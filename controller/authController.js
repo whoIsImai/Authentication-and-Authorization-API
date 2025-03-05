@@ -5,7 +5,8 @@ import 'dotenv/config'
 
 export const login = async(req,res)=>{
     const {email, password} = req.body
-    let user = await People.findOne({Email: email})
+    try {
+        let user = await People.findOne({Email: email})
     if(!user){
        return res.json({message: "No user found with that email"})
     }
@@ -26,10 +27,15 @@ export const login = async(req,res)=>{
     })
 
     const authorizationHeader = `Bearer ${refreshToken}`
-    req.headers.authorization = authorizationHeader
+    //req.headers.authorization = authorizationHeader
+   res.setHeader("Authorization", authorizationHeader)
 
-    console.log(`Cookies: ${req.cookies.accessToken}`)
+    console.log(`Cookies: ${req.cookies}`)
     console.log(`Header Auth: ${req.headers.authorization}`)
 
-    return res.json({accessToken: accessToken ,refreshToken: refreshToken})
+    return res.status(200).json({accessToken: accessToken ,refreshToken: refreshToken})    
+    } catch (error) {
+        res.json({message: error.message})
+    }
+    
 }
