@@ -4,6 +4,8 @@ import {app} from '../server.js'
 import 'dotenv/config'
 import mongoose from 'mongoose'
 
+
+console.log(`DB_URL: ${process.env.DB_URL}`)   
 mongoose.connect(process.env.DB_URL)
 
 app.listen(3000, ()=> console.log("Server is running on port 3000"))
