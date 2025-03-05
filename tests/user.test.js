@@ -4,7 +4,7 @@ import {app} from '../server.js'
 import 'dotenv/config'
 import mongoose from 'mongoose'
 
-mongoose.connect(process.env.Database_URL)
+mongoose.connect(process.env.DB_URL)
 
 app.listen(3000, ()=> console.log("Server is running on port 3000"))
 
@@ -20,7 +20,7 @@ describe('all the activities the user can perform on different routes', () => {
             .send({
                 fname: 'John',
                 lname: 'Doe',
-                email: 'email11',
+                email: 'email12',
                 password: 'password'
             })
             console.log('Response Status:', resp.status);
