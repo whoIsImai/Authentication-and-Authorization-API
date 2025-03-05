@@ -67,7 +67,7 @@ const register = async(req,res)=> {
     let newUser = new People({
         Firstname: fname, Lastname: lname, Email: email, Password: await bcrypt.hash(password, 10)})
     try {
-        
+        console.log('Hello World')
         await newUser.save()
         res.status(200).json({message: "Account created successfully"})
         
