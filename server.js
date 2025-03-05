@@ -6,7 +6,7 @@ import mongoose from 'mongoose'
 import cookieParser from 'cookie-parser'
 import 'dotenv/config'
 
-mongoose.connect(process.env.Database_URL)
+mongoose.connect(process.env.DB_URL)
 const conn = mongoose.connection
 conn.on("error", (error)=> console.log(error))
 conn.once("open", ()=> console.log("Connected to database"))

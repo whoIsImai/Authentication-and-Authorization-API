@@ -20,7 +20,7 @@ describe('all the activities the user can perform on different routes', () => {
             .send({
                 fname: 'John',
                 lname: 'Doe',
-                email: 'email12',
+                email: 'email13',
                 password: 'password'
             })
             console.log('Response Status:', resp.status);
