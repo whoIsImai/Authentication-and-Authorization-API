@@ -19,3 +19,5 @@ jobs:
             - name: Set environment variables
               run: echo "DB_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
             - run: npm test
+            - name: Check DB_URL
+              run: echo "DB_URL is $DB_URL"
