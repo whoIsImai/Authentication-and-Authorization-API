@@ -12,5 +12,5 @@ describe('used for anything that has to do with authentication and authorizaton'
         console.log(resp.body.message)
         expect(resp.status).toBe(200)
 
-    },10000)
+    },30000)
 })

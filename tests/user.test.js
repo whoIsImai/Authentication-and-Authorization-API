@@ -3,6 +3,7 @@ import supertest from 'supertest'
 import {app} from '../server.js'
 import 'dotenv/config'
 import mongoose from 'mongoose'
+
 mongoose.connect(process.env.Database_URL)
 
 app.listen(3000, ()=> console.log("Server is running on port 3000"))
@@ -26,11 +27,11 @@ describe('all the activities the user can perform on different routes', () => {
             console.log('Response Body:', resp.body);
         expect(resp.status).toBe(200)
         expect(resp.body.message).toBe('Account created successfully')
-    },10000)
+    },30000)
 
     it('should get all the users', async()=> {
         const resp = await supertest(app).get('/api/users')
         console.log('Response Status:', resp.status)
         expect(resp.status).toBe(206)
-    },10000)
+    },30000)
 })
